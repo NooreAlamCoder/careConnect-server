@@ -47,3 +47,5 @@ export interface AuthenticatedRequest extends Request {
 
 
 // Auth session token interfaces
+
+// Standard ApiResponse generic
