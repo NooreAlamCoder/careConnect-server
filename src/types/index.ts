@@ -45,3 +45,5 @@ export interface AuthenticatedRequest extends Request {
   user?: IAuthPayload;
 }
 
+
+// Auth session token interfaces
