@@ -39,3 +39,5 @@ export const getJoinedEventsCollection = (): Collection<IJoinedEvent> => {
   return db.collection<IJoinedEvent>('joined_events');
 };
 
+
+// Connection retry logic
