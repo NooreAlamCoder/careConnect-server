@@ -41,3 +41,5 @@ export const getJoinedEventsCollection = (): Collection<IJoinedEvent> => {
 
 
 // Connection retry logic
+
+// Collection accessor functions
