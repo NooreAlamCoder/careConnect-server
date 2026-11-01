@@ -454,3 +454,5 @@ export const getMyJoinedEvents = async (
 // Event detail retrieval
 
 // Param ObjectId helper
+
+// Event creation controller
