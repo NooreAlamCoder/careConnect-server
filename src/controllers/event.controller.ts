@@ -456,3 +456,5 @@ export const getMyJoinedEvents = async (
 // Param ObjectId helper
 
 // Event creation controller
+
+// Strict date validation
