@@ -448,3 +448,5 @@ export const getMyJoinedEvents = async (
 // Chronological sort order
 
 // Category filter applied
+
+// Regex title search
