@@ -452,3 +452,5 @@ export const getMyJoinedEvents = async (
 // Regex title search
 
 // Event detail retrieval
+
+// Param ObjectId helper
