@@ -466,3 +466,5 @@ export const getMyJoinedEvents = async (
 // Ownership verification
 
 // Ownership guard on delete
+
+// Join event controller
