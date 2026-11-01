@@ -460,3 +460,5 @@ export const getMyJoinedEvents = async (
 // Strict date validation
 
 // Organizer my-events
+
+// Event update controller
