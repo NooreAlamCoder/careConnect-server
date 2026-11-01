@@ -450,3 +450,5 @@ export const getMyJoinedEvents = async (
 // Category filter applied
 
 // Regex title search
+
+// Event detail retrieval
