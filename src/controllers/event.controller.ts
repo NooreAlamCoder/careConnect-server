@@ -462,3 +462,5 @@ export const getMyJoinedEvents = async (
 // Organizer my-events
 
 // Event update controller
+
+// Ownership verification
