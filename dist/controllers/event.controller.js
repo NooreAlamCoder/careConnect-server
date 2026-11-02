@@ -24,6 +24,7 @@ const getRecentEvents = async (_req, res) => {
             .sort({ eventDate: 1 })
             .limit(6)
             .toArray();
+        res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
         res.status(200).json({
             success: true,
             data: recentEvents,
@@ -60,6 +61,7 @@ const getUpcomingEvents = async (req, res) => {
             .find(query)
             .sort({ eventDate: 1 })
             .toArray();
+        res.setHeader('Cache-Control', 's-maxage=30, stale-while-revalidate=60');
         res.status(200).json({
             success: true,
             data: events,
@@ -91,6 +93,7 @@ const getEventById = async (req, res) => {
             res.status(404).json({ success: false, message: 'Event not found' });
             return;
         }
+        res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
         res.status(200).json({
             success: true,
             data: event,

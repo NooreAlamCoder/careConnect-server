@@ -25,6 +25,7 @@ export const getRecentEvents = async (_req: Request, res: Response): Promise<voi
       .limit(6)
       .toArray();
 
+    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
     res.status(200).json({
       success: true,
       data: recentEvents,
@@ -65,6 +66,7 @@ export const getUpcomingEvents = async (req: Request, res: Response): Promise<vo
       .sort({ eventDate: 1 })
       .toArray();
 
+    res.setHeader('Cache-Control', 's-maxage=30, stale-while-revalidate=60');
     res.status(200).json({
       success: true,
       data: events,
@@ -99,6 +101,7 @@ export const getEventById = async (req: Request, res: Response): Promise<void> =
       return;
     }
 
+    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
     res.status(200).json({
       success: true,
       data: event,

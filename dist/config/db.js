@@ -9,19 +9,27 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
 const dbName = process.env.DB_NAME || 'social_development_db';
-const client = new mongodb_1.MongoClient(uri, { serverSelectionTimeoutMS: 8000 });
+const client = new mongodb_1.MongoClient(uri, {
+    serverSelectionTimeoutMS: 5000,
+    maxPoolSize: 10,
+    minPoolSize: 1,
+});
 let db = null;
+let clientPromise = null;
 const connectDB = async () => {
     if (db)
         return db;
+    if (!clientPromise) {
+        clientPromise = client.connect();
+    }
     try {
-        await client.connect();
-        db = client.db(dbName);
-        console.log(`✅ MongoDB Connected successfully to database: ${dbName}`);
+        const connectedClient = await clientPromise;
+        db = connectedClient.db(dbName);
         return db;
     }
     catch (error) {
-        console.error('❌ MongoDB Connection Notice: Could not connect to MongoDB URI. Please set your MongoDB connection string in server/.env');
+        clientPromise = null;
+        console.error('❌ MongoDB Connection Notice: Could not connect to MongoDB URI.');
         throw error;
     }
 };
