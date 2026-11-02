@@ -470,3 +470,5 @@ export const getMyJoinedEvents = async (
 // Join event controller
 
 // Prevent duplicate join
+
+// User joined events list
