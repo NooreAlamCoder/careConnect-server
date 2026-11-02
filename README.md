@@ -1,6 +1,7 @@
 # 🚀 CareConnect - Backend API Server
 
 > **Live API Base URL:** [https://care-connect-server-smoky.vercel.app](https://care-connect-server-smoky.vercel.app)
+**Client Repository:** [https://github.com/NooreAlamCoder/careConnect-client](https://github.com/NooreAlamCoder/careConnect-client)
 
 High-performance REST API backend for the **CareConnect** platform, built with Express.js, TypeScript, MongoDB Atlas native driver, and JWT authorization.
 
