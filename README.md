@@ -1,15 +1,12 @@
 # 🚀 CareConnect - Backend API Server
 
-> **Live API Server:** [https://care-connect-server-smoky.vercel.app](https://care-connect-server-smoky.vercel.app)  
-> **Client Application (Live):** [https://care-connect-client-one.vercel.app](https://care-connect-client-one.vercel.app)  
-> **Server Repository:** [https://github.com/NooreAlamCoder/careConnect-server](https://github.com/NooreAlamCoder/careConnect-server)  
-> **Client Repository:** [https://github.com/NooreAlamCoder/careConnect-client](https://github.com/NooreAlamCoder/careConnect-client)
+> **Live API Base URL:** [https://care-connect-server-smoky.vercel.app](https://care-connect-server-smoky.vercel.app)
 
-Backend REST API server for the **CareConnect - Social Development Events Platform**, built with Express.js, TypeScript, MongoDB Atlas native driver, and JWT authorization.
+High-performance REST API backend for the **CareConnect** platform, built with Express.js, TypeScript, MongoDB Atlas native driver, and JWT authorization.
 
 ---
 
-## 🌟 Key Features
+## 🌟 Backend Core Capabilities
 
 * **Strict TypeScript Architecture:** 100% type safety with custom interfaces (`IEvent`, `IJoinedEvent`, `ApiResponse`), with zero usage of `any`.
 * **JWT Protected APIs:** Secure authorization middleware protecting event creation, updates, deletions, and volunteer join actions.
