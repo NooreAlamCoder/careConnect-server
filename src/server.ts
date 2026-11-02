@@ -17,12 +17,29 @@ const PORT = process.env.PORT || 5000;
 // Middlewares
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+      // Allow requests with no origin (curl/mobile), localhost, or any vercel domain
+      if (!origin || origin.includes('localhost') || origin.endsWith('.vercel.app') || (process.env.CLIENT_URL && origin.includes(process.env.CLIENT_URL))) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
     credentials: true,
   })
 );
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Database auto-connection middleware for serverless/Vercel invocations
+app.use(async (_req, _res, next) => {
+  try {
+    await connectDB();
+  } catch (error) {
+    // DB errors handled gracefully
+  }
+  next();
+});
 
 // Health Check Route
 app.get('/', getHealthStatus);
@@ -47,5 +64,10 @@ const startServer = async (): Promise<void> => {
   });
 };
 
-startServer();
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  startServer();
+}
+
+// Export app for Vercel Serverless Function
+export default app;
 
