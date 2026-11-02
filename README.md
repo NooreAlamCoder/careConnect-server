@@ -1,80 +1,91 @@
 # 🚀 CareConnect - Backend API Server
 
-Backend server for the **CareConnect - Social Development Events Platform**, built with Express.js, TypeScript, MongoDB, and JWT authentication.
+> **Live API Server:** [https://care-connect-server-smoky.vercel.app](https://care-connect-server-smoky.vercel.app)  
+> **Client Application (Live):** [https://care-connect-client-one.vercel.app](https://care-connect-client-one.vercel.app)  
+> **Server Repository:** [https://github.com/NooreAlamCoder/careConnect-server](https://github.com/NooreAlamCoder/careConnect-server)  
+> **Client Repository:** [https://github.com/NooreAlamCoder/careConnect-client](https://github.com/NooreAlamCoder/careConnect-client)
+
+Backend REST API server for the **CareConnect - Social Development Events Platform**, built with Express.js, TypeScript, MongoDB Atlas native driver, and JWT authorization.
 
 ---
 
 ## 🌟 Key Features
-* **Strict TypeScript Architecture:** Zero usage of `any`, ensuring comprehensive end-to-end type safety.
+
+* **Strict TypeScript Architecture:** 100% type safety with custom interfaces (`IEvent`, `IJoinedEvent`, `ApiResponse`), with zero usage of `any`.
 * **JWT Protected APIs:** Secure authorization middleware protecting event creation, updates, deletions, and volunteer join actions.
-* **Strict Future Date Validation:** Automatic validation preventing past-dated events from being created or updated.
-* **Optimized MongoDB Queries:** Uses `.limit(6)` and date filters (`eventDate >= today`) for fast query execution.
-* **Owner-Only Mutations:** Built-in creator verification ensuring only organizers can modify or delete their respective events.
+* **Strict Future Date Validation:** Server-side boundary check preventing past-dated events from ever being created or updated in the database.
+* **Optimized MongoDB Queries:** Efficient indexing and queries using `.limit(6)` for recent events and indexed date filtering (`eventDate >= today`).
+* **Owner-Only Mutations:** Built-in creator verification ensuring only the organizing user can edit or delete their respective events.
+* **Duplicate Join Prevention:** Verification logic preventing a user from joining the same initiative multiple times.
+* **10MB Extended Payload Support:** Configured Express JSON and urlencoded body parsers to smoothly handle base64 image uploads.
+* **Serverless / Vercel Ready:** Seamless deployment on Vercel with `@vercel/node` and automated database connection pooling.
 
 ---
 
 ## 🛠️ Tech Stack
+
 * **Runtime:** Node.js
-* **Framework:** Express.js
-* **Language:** TypeScript
-* **Database:** MongoDB (Native Driver)
-* **Security:** JSON Web Tokens (`jsonwebtoken`), `cors`, `dotenv`
+* **Framework:** Express.js 5
+* **Language:** TypeScript (Node16 module resolution)
+* **Database:** MongoDB (Official Native Driver `mongodb`)
+* **Security & Utilities:** `jsonwebtoken`, `cors`, `dotenv`, `tsx`
+* **Deployment:** Vercel
 
 ---
 
 ## 📡 API Endpoints Reference
 
 ### Public Routes
-* `GET /` - Health check status and server uptime
+* `GET /` - Health check status, uptime, and server timestamp
 * `GET /api/events/recent` - Returns 6 recent upcoming events (`.limit(6)`)
-* `GET /api/events/upcoming` - Returns upcoming events with search & category filtering
+* `GET /api/events/upcoming` - Returns upcoming events with keyword search (`?search=`) and category filtering (`?category=`)
 * `GET /api/events/:id` - Fetch single event details by MongoDB ObjectId
 
 ### Protected Routes (Requires `Authorization: Bearer <token>`)
-* `POST /api/auth/jwt` - Generates JWT token upon user authentication
-* `POST /api/events` - Host a new community event (Future date validated)
+* `POST /api/auth/jwt` - Generates signed JWT token upon user authentication
+* `POST /api/events` - Host a new community event (Strict future date validated)
 * `GET /api/events/user/my-events` - Fetch events organized by the authenticated user
-* `PUT /api/events/:id` - Update existing event (Creator only)
-* `DELETE /api/events/:id` - Delete an event (Creator only)
-* `POST /api/events/action/join` - Join a community event as a volunteer
-* `GET /api/events/user/joined-by-me` - Fetch all events joined by current user
+* `PUT /api/events/:id` - Update existing event (Owner verification enforced)
+* `DELETE /api/events/:id` - Delete an event (Owner verification enforced)
+* `POST /api/events/action/join` - Join a community event as a volunteer (Duplicate prevention checked)
+* `GET /api/events/user/joined-by-me` - Fetch all events joined by the current user (Sorted chronologically by event date)
 
 ---
 
 ## ⚙️ Local Development Setup
 
-1. Clone the repository and navigate to `server/`:
+1. **Clone the repository:**
    ```bash
-   cd server
+   git clone https://github.com/NooreAlamCoder/careConnect-server.git
+   cd careConnect-server
    ```
 
-2. Install dependencies:
+2. **Install dependencies:**
    ```bash
    npm install
    ```
 
-3. Configure environment variables in `.env`:
+3. **Configure environment variables in `.env`:**
    ```env
-   PORT=5000
-   MONGODB_URI=your_mongodb_connection_uri
-   DB_NAME=social_development_db
-   JWT_SECRET=your_jwt_secret_key
-   CLIENT_URL=http://localhost:3000
+   PORT=5050
+   MONGODB_URI=your_mongodb_atlas_connection_string
+   DB_NAME=CareConnectDB
+   JWT_SECRET=your_jwt_secret_key_here
+   CLIENT_URL=http://localhost:3001
    ```
 
-4. (Optional) Seed realistic community events:
+4. **(Optional) Seed realistic community events:**
    ```bash
    npm run seed
    ```
 
-5. Run development server:
+5. **Run development server:**
    ```bash
    npm run dev
    ```
 
-6. Build for production:
+6. **Build for production:**
    ```bash
    npm run build
    npm start
    ```
-
