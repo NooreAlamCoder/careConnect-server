@@ -7,7 +7,6 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const db_1 = require("./config/db");
-const cors_2 = require("./config/cors");
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const event_routes_1 = __importDefault(require("./routes/event.routes"));
 const health_controller_1 = require("./controllers/health.controller");
@@ -17,11 +16,29 @@ const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
 // Middlewares
 app.use((0, cors_1.default)({
-    origin: cors_2.allowedOrigins,
+    origin: (origin, callback) => {
+        // Allow requests with no origin (curl/mobile), localhost, or any vercel domain
+        if (!origin || origin.includes('localhost') || origin.endsWith('.vercel.app') || (process.env.CLIENT_URL && origin.includes(process.env.CLIENT_URL))) {
+            callback(null, true);
+        }
+        else {
+            callback(null, true);
+        }
+    },
     credentials: true,
 }));
 app.use(express_1.default.json({ limit: '10mb' }));
 app.use(express_1.default.urlencoded({ extended: true, limit: '10mb' }));
+// Database auto-connection middleware for serverless/Vercel invocations
+app.use(async (_req, _res, next) => {
+    try {
+        await (0, db_1.connectDB)();
+    }
+    catch (error) {
+        // DB errors handled gracefully
+    }
+    next();
+});
 // Health Check Route
 app.get('/', health_controller_1.getHealthStatus);
 // API Routes
@@ -41,4 +58,8 @@ const startServer = async () => {
         console.log(`🚀 Server listening on http://localhost:${PORT}`);
     });
 };
-startServer();
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    startServer();
+}
+// Export app for Vercel Serverless Function
+exports.default = app;
