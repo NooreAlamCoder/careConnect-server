@@ -468,3 +468,5 @@ export const getMyJoinedEvents = async (
 // Ownership guard on delete
 
 // Join event controller
+
+// Prevent duplicate join
