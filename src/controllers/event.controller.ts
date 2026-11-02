@@ -444,31 +444,3 @@ export const getMyJoinedEvents = async (
     });
   }
 };
-
-// Chronological sort order
-
-// Category filter applied
-
-// Regex title search
-
-// Event detail retrieval
-
-// Param ObjectId helper
-
-// Event creation controller
-
-// Strict date validation
-
-// Organizer my-events
-
-// Event update controller
-
-// Ownership verification
-
-// Ownership guard on delete
-
-// Join event controller
-
-// Prevent duplicate join
-
-// User joined events list

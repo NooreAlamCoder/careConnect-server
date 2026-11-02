@@ -49,9 +49,3 @@ const startServer = async (): Promise<void> => {
 
 startServer();
 
-
-// 10mb body parser limit
-
-// Urlencoded extended parser
-
-// Port 5050 config
